@@ -10,34 +10,33 @@
     <style>
         .profile-photo {
             width: 40px;
-            height: 40px;
             border-radius: 50%;
             object-fit: cover;
         }
     </style>
+
+    <nav class="navbar sticky-top navbar-dark bg-dark">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#">ECP Walking Challenge</a>
+            <ul class="navbar-nav ms-auto">
+                <li class="nav-item">
+                    <a href="/login">
+                        <img th:src="@{/img/btn_strava_connectwith_orange@2x.png}" alt="Login to Strava" class="img-fluid" style="max-height: 50px;">
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </nav>
 </head>
 <body>
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-    <div class="container-fluid">
-        <a class="navbar-brand" href="#">ECP Walking Challenge</a>
-        <ul class="navbar-nav ms-auto">
-            <li class="nav-item">
-            </li>
-            <li class="nav-item">
-                <a href="/login">
-                <img th:src="@{/img/btn_strava_connectwith_orange@2x.png}" alt="Login to Strava" class="img-fluid" style="max-height: 50px;">
-                </a>
-            </li>
-        </ul>
-    </div>
-</nav>
 
 <div class="announcement-banner">
     To join the challenge, please click the Connect with Strava button above!
 </div>
 
 <div class="container">
-    <div class="overflow-auto">
+    <!-- Tabs for larger screens -->
+    <div class="d-none d-md-block overflow-auto">
         <ul class="nav nav-tabs nav-justified" id="dashboardTabs" role="tablist">
             <li class="nav-item">
                 <a class="nav-link text-dark active" id="athletes-tab" data-bs-toggle="tab" href="#athletes" role="tab" aria-controls="athletes" aria-selected="true">🏃 Athletes</a>
@@ -55,6 +54,22 @@
                 <a class="nav-link text-dark" id="lab-leaderboard-tab" data-bs-toggle="tab" href="#lab-leaderboard" role="tab" aria-controls="lab-leaderboard" aria-selected="false">🧪 Lab Leaderboard</a>
             </li>
         </ul>
+    </div>
+
+    <!-- Dropdown for smaller screens -->
+    <div class="d-md-none">
+        <div class="dropdown">
+            <button class="btn btn-secondary dropdown-toggle w-100" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
+                Menu
+            </button>
+            <ul class="dropdown-menu w-100" aria-labelledby="dropdownMenuButton">
+                <li><a class="dropdown-item" href="#athletes" data-bs-toggle="tab">🏃 Athletes</a></li>
+                <li><a class="dropdown-item" href="#teams" data-bs-toggle="tab">👫 Teams</a></li>
+                <li><a class="dropdown-item" href="#leaderboard" data-bs-toggle="tab">🏆 Leaderboard</a></li>
+                <li><a class="dropdown-item" href="#team-leaderboard" data-bs-toggle="tab">💪 Team Leaderboard</a></li>
+                <li><a class="dropdown-item" href="#lab-leaderboard" data-bs-toggle="tab">🧪 Lab Leaderboard</a></li>
+            </ul>
+        </div>
     </div>
 
     <div class="tab-content" id="dashboardTabsContent">
@@ -96,14 +111,12 @@
                 </tr>
                 </tbody>
             </table>
-            <button class="btn btn-success mt-4" data-bs-toggle="modal" data-bs-target="#newTeamModal">Create New Team</button>
         </div>
         <div class="tab-pane fade" id="leaderboard" role="tabpanel" aria-labelledby="leaderboard-tab">
             <table class="table table-responsive table-dark mt-3">
-                <tr>
-                    <th>Rank</th>
-                    <th>Athlete</th>
-                    <th>Total Distance (km)</th>
+                <th>Rank</th>
+                <th>Athlete</th>
+                <th>Total Distance (km)</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -169,16 +182,13 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title">Change Team for <span th:text="${athlete.name}"></span></h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
                 <form th:action="@{/athletes/changeTeam}" method="post">
                     <input type="hidden" name="athleteId" th:value="${athlete.id}">
-                    <select id="teamSelect" name="teamId" class="form-control">
-                        <option value="" disabled selected>Select a team:</option>
-                        <option th:each="team : ${teams}" th:value="${team.id}" th:text="${team.name}"></option>
+                    <option value="" disabled selected>Select a team:</option>
+                    <option th:each="team : ${teams}" th:value="${team.id}" th:text="${team.name}"></option>
                     </select>
-                    <button type="submit" class="btn btn-primary mt-3">Save changes</button>
                 </form>
             </div>
         </div>
@@ -215,7 +225,7 @@
     </div>
 </div>
 
-<footer class="navbar navbar-expand-lg navbar-dark bg-dark mt-4 fixed-bottom">
+<footer class="navbar fixed-bottom navbar-dark bg-dark" id="footer-nav">
     <div class="container-fluid">
         <span class="navbar-text mx-auto">
             App built by Rob Eves - contact on Teams for any issues!
@@ -235,7 +245,14 @@
             e.preventDefault();
             $(this).tab('show');
         });
+
+        $('.dropdown-menu a').on('click', function (e) {
+            e.preventDefault();
+            var target = $(this).attr('href');
+            $('.tab-pane').removeClass('show active');
+            $(target).addClass('show active');
+            $('.dropdown-toggle').dropdown('toggle');
+        });
     });
-</script>
-</body>
+</script></body>
 </html>
