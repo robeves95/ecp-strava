@@ -1,0 +1,14 @@
+entrypoint: java -Xmx2048m -jar ecp-strava.jar
+runtime: java21
+
+instance_class: F1
+
+handlers:
+- url: /.*
+  script: this field is required, but ignored
+
+automatic_scaling:
+ min_instances: 0
+ max_instances: 1
+
+service: default
