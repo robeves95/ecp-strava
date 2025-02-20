@@ -20,17 +20,11 @@ public class Activity {
     @JoinColumn(name = "athlete_id", nullable = false)
     private Athlete athlete;
 
-    @Column(name = "activity_name", nullable = false)
-    private String activityName;
-
     @Column(name = "sport_type", nullable = false)
     private String sportType;
 
     @Column(name = "distance", nullable = false)
     private double distance;
-
-    @Column(name = "moving_time", nullable = false)
-    private int movingTime;
 
     @Column(name = "start_date", nullable = false)
     private LocalDateTime startDate;

@@ -13,13 +13,9 @@ import java.util.List;
 public class Athlete {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     private String name;
-
-    @Column(name = "strava_athlete_id", unique = true, nullable = false)
-    private Long stravaAthleteId;
 
     @Column(name = "access_token", nullable = false)
     private String accessToken;

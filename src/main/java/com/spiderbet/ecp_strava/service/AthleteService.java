@@ -6,6 +6,7 @@ import com.spiderbet.ecp_strava.repository.AthleteRepository;
 import com.spiderbet.ecp_strava.repository.TeamRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -22,8 +23,8 @@ public class AthleteService {
     }
 
     public void saveOrUpdateAthlete(Long stravaAthleteId, String name, String accessToken, String refreshToken, Long expiresAt, String profilePhotoUrl, Long teamId) {
-        Athlete athlete = athleteRepository.findByStravaAthleteId(stravaAthleteId).orElse(new Athlete());
-        athlete.setStravaAthleteId(stravaAthleteId);
+        Athlete athlete = athleteRepository.findById(stravaAthleteId).orElse(new Athlete());
+        athlete.setId(stravaAthleteId);
         athlete.setName(name);
         athlete.setAccessToken(accessToken);
         athlete.setRefreshToken(refreshToken);
@@ -51,10 +52,11 @@ public class AthleteService {
     }
 
     public Map<String, Double> getLeaderboard() {
-        return athleteRepository.findAll().stream()
-                .collect(Collectors.toMap(
-                        Athlete::getName,
-                        athlete -> athlete.getActivities().stream().mapToDouble(activity -> activity.getDistance() / 1000).sum()
-                ));
+        List<Object[]> results = athleteRepository.findLeaderboard();
+        Map<String, Double> leaderboard = new LinkedHashMap<>();
+        for (Object[] result : results) {
+            leaderboard.put((String) result[0], (Double) result[1]);
+        }
+        return leaderboard;
     }
 }
