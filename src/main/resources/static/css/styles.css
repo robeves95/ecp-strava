@@ -38,3 +38,7 @@ footer {
 .table td {
     vertical-align: middle;
 }
+
+.strava-logo {
+    height: 30px;
+}
