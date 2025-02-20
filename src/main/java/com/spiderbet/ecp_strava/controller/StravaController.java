@@ -64,11 +64,12 @@ public class StravaController {
             Map<String, Object> athleteData = (Map<String, Object>) responseBody.get("athlete");
             Long stravaAthleteId = ((Number) athleteData.get("id")).longValue();
             String name = (String) athleteData.get("firstname") + " " + (String) athleteData.get("lastname");
+            String profilePhotoUrl = (String) athleteData.get("profile");
 
             // Save athlete to the database without setting the team
-            athleteService.saveOrUpdateAthlete(stravaAthleteId, name, accessToken, refreshToken, expiresAt, null);
+            athleteService.saveOrUpdateAthlete(stravaAthleteId, name, accessToken, refreshToken, expiresAt, profilePhotoUrl, null);
 
-            return "redirect:/?showChangeTeamModal=true&athleteId=" + stravaAthleteId; // Redirect to dashboard with query parameter
+            return "redirect:/"; // Redirect to dashboard with query parameter
         }
 
         return "error"; // Redirect to an error page if token exchange fails

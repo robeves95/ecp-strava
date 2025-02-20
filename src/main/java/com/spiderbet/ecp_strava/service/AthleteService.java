@@ -21,24 +21,24 @@ public class AthleteService {
         this.teamRepository = teamRepository;
     }
 
-    public void saveOrUpdateAthlete(Long stravaAthleteId, String name, String accessToken, String refreshToken, Long expiresAt, String teamName) {
-        Team team = teamRepository.findByName(teamName).orElseGet(() -> {
-            Team newTeam = new Team();
-            newTeam.setName(teamName);
-            return teamRepository.save(newTeam);
-        });
-
+    public void saveOrUpdateAthlete(Long stravaAthleteId, String name, String accessToken, String refreshToken, Long expiresAt, String profilePhotoUrl, Long teamId) {
         Athlete athlete = athleteRepository.findByStravaAthleteId(stravaAthleteId).orElse(new Athlete());
         athlete.setStravaAthleteId(stravaAthleteId);
         athlete.setName(name);
         athlete.setAccessToken(accessToken);
         athlete.setRefreshToken(refreshToken);
         athlete.setExpiresAt(expiresAt);
-        athlete.setTeam(team);
+        athlete.setProfilePhotoUrl(profilePhotoUrl);
+
+        if (teamId != null) {
+            Team team = teamRepository.findById(teamId).orElse(null);
+            athlete.setTeam(team);
+        } else {
+            athlete.setTeam(null);
+        }
 
         athleteRepository.save(athlete);
     }
-
     public List<Athlete> getAllAthletes() {
         return athleteRepository.findAll();
     }
