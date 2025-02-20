@@ -26,3 +26,15 @@ footer {
 .profile-photo {
     margin-right: 1em;
 }
+
+.announcement-banner {
+    background-color: #FC4C02; /* Strava orange color */
+    color: white;
+    text-align: center;
+    margin-bottom: 1em;
+    font-weight: bold;
+}
+
+.table td {
+    vertical-align: middle;
+}
