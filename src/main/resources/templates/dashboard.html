@@ -4,77 +4,104 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ECP Walking Challenge</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="/css/styles.css" rel="stylesheet">
     <link rel="icon" type="image/png" th:href="@{/img/favicon.ico}">
     <style>
+        body {
+            background-color: #f8f9fa;
+        }
+
         .profile-photo {
             width: 40px;
+            height: 40px;
             border-radius: 50%;
             object-fit: cover;
         }
-    </style>
 
-    <nav class="navbar sticky-top navbar-dark bg-dark">
-        <div class="container-fluid">
-            <a class="navbar-brand" href="#">ECP Walking Challenge</a>
-            <ul class="navbar-nav ms-auto">
-                <li class="nav-item">
-                    <a href="/login">
-                        <img th:src="@{/img/btn_strava_connectwith_orange@2x.png}" alt="Login to Strava" class="img-fluid" style="max-height: 50px;">
-                    </a>
-                </li>
-            </ul>
-        </div>
-    </nav>
+        .navbar {
+            padding: 10px 15px;
+        }
+
+        .nav-tabs {
+            display: flex;
+            flex-wrap: nowrap;
+            overflow-x: auto;
+            white-space: nowrap;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        .nav-tabs .nav-item {
+            flex-shrink: 0;
+        }
+
+        .container {
+            padding-top: 15px;
+        }
+
+        .table {
+            font-size: 14px;
+        }
+
+        .btn {
+            font-size: 14px;
+            padding: 8px 12px;
+        }
+
+        .announcement-banner {
+            background-color: #17a2b8; /* Light Blue */
+            color: white;
+            font-weight: bold;
+            padding: 10px;
+            text-align: center;
+        }
+    </style>
 </head>
 <body>
 
+<!-- Navbar -->
+<nav class="navbar sticky-top navbar-dark bg-dark">
+    <div class="container-fluid d-flex justify-content-between align-items-center">
+        <a class="navbar-brand" href="#">ECP Walking Challenge</a>
+        <a href="/login">
+            <img th:src="@{/img/btn_strava_connectwith_orange@2x.png}" alt="Login to Strava" class="img-fluid" style="max-height: 50px;">
+        </a>
+    </div>
+</nav>
+
+<!-- Announcement Banner -->
 <div class="announcement-banner">
-    To join the challenge, please click the Connect with Strava button above!
+    🚀 To join the challenge, please click the Connect with Strava button above!
 </div>
 
 <div class="container">
-    <!-- Tabs for larger screens -->
-    <div class="d-none d-md-block overflow-auto">
+    <!-- Tabs -->
+    <div class="overflow-auto">
         <ul class="nav nav-tabs nav-justified" id="dashboardTabs" role="tablist">
             <li class="nav-item">
-                <a class="nav-link text-dark active" id="athletes-tab" data-bs-toggle="tab" href="#athletes" role="tab" aria-controls="athletes" aria-selected="true">🏃 Athletes</a>
+                <a class="nav-link text-dark active" id="athletes-tab" data-bs-toggle="tab" href="#athletes" role="tab">🏃 Athletes</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link text-dark" id="teams-tab" data-bs-toggle="tab" href="#teams" role="tab" aria-controls="teams" aria-selected="false">👫 Teams</a>
+                <a class="nav-link text-dark" id="teams-tab" data-bs-toggle="tab" href="#teams" role="tab">👫 Teams</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link text-dark" id="leaderboard-tab" data-bs-toggle="tab" href="#leaderboard" role="tab" aria-controls="leaderboard" aria-selected="false">🏆 Leaderboard</a>
+                <a class="nav-link text-dark" id="leaderboard-tab" data-bs-toggle="tab" href="#leaderboard" role="tab">🏆 Leaderboard</a>
             </li>
-            <li class="nav-item" role="presentation">
-                <a class="nav-link text-dark" id="team-leaderboard-tab" data-bs-toggle="tab" href="#team-leaderboard" role="tab" aria-controls="team-leaderboard" aria-selected="false">💪 Team Leaderboard</a>
+            <li class="nav-item">
+                <a class="nav-link text-dark" id="team-leaderboard-tab" data-bs-toggle="tab" href="#team-leaderboard" role="tab">💪 Team Leaderboard</a>
             </li>
-            <li class="nav-item" role="presentation">
-                <a class="nav-link text-dark" id="lab-leaderboard-tab" data-bs-toggle="tab" href="#lab-leaderboard" role="tab" aria-controls="lab-leaderboard" aria-selected="false">🧪 Lab Leaderboard</a>
+            <li class="nav-item">
+                <a class="nav-link text-dark" id="lab-leaderboard-tab" data-bs-toggle="tab" href="#lab-leaderboard" role="tab">🧪 Lab Leaderboard</a>
             </li>
         </ul>
     </div>
 
-    <!-- Dropdown for smaller screens -->
-    <div class="d-md-none">
-        <div class="dropdown">
-            <button class="btn btn-secondary dropdown-toggle w-100" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
-                Menu
-            </button>
-            <ul class="dropdown-menu w-100" aria-labelledby="dropdownMenuButton">
-                <li><a class="dropdown-item" href="#athletes" data-bs-toggle="tab">🏃 Athletes</a></li>
-                <li><a class="dropdown-item" href="#teams" data-bs-toggle="tab">👫 Teams</a></li>
-                <li><a class="dropdown-item" href="#leaderboard" data-bs-toggle="tab">🏆 Leaderboard</a></li>
-                <li><a class="dropdown-item" href="#team-leaderboard" data-bs-toggle="tab">💪 Team Leaderboard</a></li>
-                <li><a class="dropdown-item" href="#lab-leaderboard" data-bs-toggle="tab">🧪 Lab Leaderboard</a></li>
-            </ul>
-        </div>
-    </div>
+    <!-- Tab Content -->
+    <div class="tab-content mt-3">
 
-    <div class="tab-content" id="dashboardTabsContent">
-        <div class="tab-pane fade show active" id="athletes" role="tabpanel" aria-labelledby="athletes-tab">
-            <table class="table table-dark mt-3">
+        <!-- Athletes Tab -->
+        <div class="tab-pane fade show active" id="athletes">
+            <table class="table table-dark table-responsive mt-3">
                 <thead>
                 <tr>
                     <th>Name</th>
@@ -83,11 +110,11 @@
                 </tr>
                 </thead>
                 <tbody>
-                <tr th:if="${athletes.empty}">
-                    <td colspan="4">No athletes found.</td>
-                </tr>
                 <tr th:each="athlete : ${athletes}">
-                    <td><img th:src="${athlete.profilePhotoUrl}" alt="Profile Photo" class="profile-photo"><a th:text="${athlete.name}"></a></td>
+                    <td>
+                        <img th:src="${athlete.profilePhotoUrl}" alt="Profile Photo" class="profile-photo">
+                        <a th:text="${athlete.name}"></a>
+                    </td>
                     <td th:text="${athlete.team != null ? athlete.team.name : 'No Team'}"></td>
                     <td>
                         <button class="btn btn-primary" data-bs-toggle="modal" th:data-bs-target="'#changeTeamModal' + ${athlete.id}">✏️</button>
@@ -96,8 +123,31 @@
                 </tbody>
             </table>
         </div>
-        <div class="tab-pane fade" id="teams" role="tabpanel" aria-labelledby="teams-tab">
-            <table class="table table-responsive table-dark mt-3">
+
+        <!-- Leaderboard Tabs -->
+        <div class="tab-pane fade" id="leaderboard">
+            <table class="table table-dark table-responsive mt-3">
+                <thead>
+                <tr>
+                    <th>Rank</th>
+                    <th>Athlete</th>
+                    <th>Total Distance (km)</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="entry, iterStat : ${leaderboard}">
+                    <td th:text="${iterStat.index + 1}"></td>
+                    <td th:text="${entry.key}"></td>
+                    <td th:text="${#numbers.formatDecimal(entry.value / 1000, 1, 2)}"></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+
+
+        <!-- Teams Tab -->
+        <div class="tab-pane fade" id="teams" role="tabpanel">
+            <table class="table table-dark table-responsive mt-3">
                 <thead>
                 <tr>
                     <th>Team</th>
@@ -111,28 +161,12 @@
                 </tr>
                 </tbody>
             </table>
+            <button class="btn btn-success w-100 mt-3" data-bs-toggle="modal" data-bs-target="#newTeamModal">Create New Team</button>
         </div>
-        <div class="tab-pane fade" id="leaderboard" role="tabpanel" aria-labelledby="leaderboard-tab">
-            <table class="table table-responsive table-dark mt-3">
-                <th>Rank</th>
-                <th>Athlete</th>
-                <th>Total Distance (km)</th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr th:if="${leaderboard.isEmpty()}">
-                    <td colspan="4">No leaderboard data available.</td>
-                </tr>
-                <tr th:each="entry, iterStat : ${leaderboard}">
-                    <td th:text="${iterStat.index + 1}"></td>
-                    <td th:text="${entry.key}"></td>
-                    <td th:text="${#numbers.formatDecimal(entry.value / 1000, 1, 2)}"></td>
-                </tr>
-                </tbody>
-            </table>
-        </div>
-        <div class="tab-pane fade" id="team-leaderboard" role="tabpanel" aria-labelledby="team-leaderboard-tab">
-            <table class="table table-responsive table-dark mt-3">
+
+        <!-- Team Leaderboard -->
+        <div class="tab-pane fade" id="team-leaderboard">
+            <table class="table table-dark table-responsive mt-3">
                 <thead>
                 <tr>
                     <th>Rank</th>
@@ -141,9 +175,6 @@
                 </tr>
                 </thead>
                 <tbody>
-                <tr th:if="${teamLeaderboard.isEmpty()}">
-                    <td colspan="3">No team leaderboard data available.</td>
-                </tr>
                 <tr th:each="entry, iterStat : ${teamLeaderboard}">
                     <td th:text="${iterStat.index + 1}"></td>
                     <td th:text="${entry.key}"></td>
@@ -152,8 +183,10 @@
                 </tbody>
             </table>
         </div>
-        <div class="tab-pane fade" id="lab-leaderboard" role="tabpanel" aria-labelledby="lab-leaderboard-tab">
-            <table class="table table-responsive table-dark mt-3">
+
+        <!-- Lab Leaderboard -->
+        <div class="tab-pane fade" id="lab-leaderboard">
+            <table class="table table-dark table-responsive mt-3">
                 <thead>
                 <tr>
                     <th>Rank</th>
@@ -162,9 +195,6 @@
                 </tr>
                 </thead>
                 <tbody>
-                <tr th:if="${labLeaderboard.isEmpty()}">
-                    <td colspan="3">No lab leaderboard data available.</td>
-                </tr>
                 <tr th:each="entry, iterStat : ${labLeaderboard}">
                     <td th:text="${iterStat.index + 1}"></td>
                     <td th:text="${entry.key}"></td>
@@ -173,23 +203,28 @@
                 </tbody>
             </table>
         </div>
+
     </div>
 </div>
 
 <!-- Change Team Modal -->
-<div th:each="athlete : ${athletes}" th:id="'changeTeamModal' + ${athlete.id}" class="modal fade" tabindex="-1" role="dialog">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title">Change Team for <span th:text="${athlete.name}"></span></h5>
-            </div>
-            <div class="modal-body">
-                <form th:action="@{/athletes/changeTeam}" method="post">
-                    <input type="hidden" name="athleteId" th:value="${athlete.id}">
-                    <option value="" disabled selected>Select a team:</option>
-                    <option th:each="team : ${teams}" th:value="${team.id}" th:text="${team.name}"></option>
-                    </select>
-                </form>
+<div th:each="athlete : ${athletes}">
+    <div class="modal fade" th:id="'changeTeamModal' + ${athlete.id}">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Change Team for <span th:text="${athlete.name}"></span></h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <form th:action="@{/changeTeam}" method="post">
+                        <input type="hidden" name="athleteId" th:value="${athlete.id}">
+                        <select name="teamId" class="form-control">
+                            <option th:each="team : ${teams}" th:value="${team.id}" th:text="${team.name}"></option>
+                        </select>
+                        <button type="submit" class="btn btn-primary mt-3">Save</button>
+                    </form>
+                </div>
             </div>
         </div>
     </div>
@@ -225,34 +260,6 @@
     </div>
 </div>
 
-<footer class="navbar fixed-bottom navbar-dark bg-dark" id="footer-nav">
-    <div class="container-fluid">
-        <span class="navbar-text mx-auto">
-            App built by Rob Eves - contact on Teams for any issues!
-        </span>
-        <span class="navbar-text mx-auto">
-            <img th:src="@{/img/api_logo_pwrdBy_strava_stack_light.png}" alt="Powered by Strava" class="strava-logo img-fluid">
-        </span>
-    </div>
-</footer>
-
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
-<script>
-    $(document).ready(function () {
-        $('#dashboardTabs a').on('click', function (e) {
-            e.preventDefault();
-            $(this).tab('show');
-        });
-
-        $('.dropdown-menu a').on('click', function (e) {
-            e.preventDefault();
-            var target = $(this).attr('href');
-            $('.tab-pane').removeClass('show active');
-            $(target).addClass('show active');
-            $('.dropdown-toggle').dropdown('toggle');
-        });
-    });
-</script></body>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
 </html>
