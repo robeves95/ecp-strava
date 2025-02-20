@@ -175,5 +175,23 @@
         });
     });
 </script>
+
+<script>
+    $(document).ready(function () {
+        const urlParams = new URLSearchParams(window.location.search);
+        const showChangeTeamModal = urlParams.get('showChangeTeamModal');
+        const athleteId = urlParams.get('athleteId');
+
+        if (showChangeTeamModal && athleteId) {
+            const modalId = `#changeTeamModal${athleteId}`;
+            $(modalId).modal('show');
+        }
+
+        $('#dashboardTabs a').on('click', function (e) {
+            e.preventDefault();
+            $(this).tab('show');
+        });
+    });
+</script>
 </body>
 </html>
