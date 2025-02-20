@@ -1,3 +1,4 @@
+/* Existing styles */
 body {
     background-color: #f8f9fa;
 }
@@ -8,7 +9,7 @@ body {
 }
 
 .nav-link {
-    font-size: 1.1rem;
+    font-size: 0.9rem;
 }
 
 .table {
@@ -33,12 +34,33 @@ footer {
     text-align: center;
     margin-bottom: 1em;
     font-weight: bold;
+    font-size: 1rem;
 }
 
 .table td {
     vertical-align: middle;
+    font-size: 0.9rem;
 }
 
 .strava-logo {
-    height: 30px;
+    height: 1.5em;
+}
+
+.nav-tabs .nav-item.show .nav-link, .nav-tabs {
+    font-weight: bold;
+}
+
+.nav-tabs .nav-item.show .nav-link, .nav-tabs .nav-link.active {
+    color: white !important;
+    background-color: #fc4c01;
+}
+
+:root, [data-bs-theme=light] {
+    --bs-border-radius: 0;
+    --bs-border-radius-sm: 0;
+    --bs-border-radius-lg: 0.5rem;
+    --bs-border-radius-xl: 1rem;
+    --bs-border-radius-xxl: 2rem;
+    --bs-border-radius-2xl: var(--bs-border-radius-xxl);
+    --bs-border-radius-pill: 50rem;
 }

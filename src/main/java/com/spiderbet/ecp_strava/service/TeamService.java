@@ -1,10 +1,15 @@
 package com.spiderbet.ecp_strava.service;
 
+import com.spiderbet.ecp_strava.model.Activity;
 import com.spiderbet.ecp_strava.model.Team;
 import com.spiderbet.ecp_strava.repository.TeamRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 @Service
 public class TeamService {
@@ -24,5 +29,49 @@ public class TeamService {
         team.setName(name);
         team.setLabName(labName);
         teamRepository.save(team);
+    }
+
+    public Map<String, Double> getTeamLeaderboard() {
+        List<Team> teams = teamRepository.findAll();
+        Map<String, Double> teamDistances = new HashMap<>();
+
+        for (Team team : teams) {
+            double totalDistance = team.getAthletes().stream()
+                    .flatMap(athlete -> athlete.getActivities().stream())
+                    .mapToDouble(Activity::getDistance)
+                    .sum();
+            teamDistances.put(team.getName(), totalDistance);
+        }
+
+        return teamDistances.entrySet().stream()
+                .sorted(Map.Entry.<String, Double>comparingByValue().reversed())
+                .collect(Collectors.toMap(
+                        Map.Entry::getKey,
+                        Map.Entry::getValue,
+                        (e1, e2) -> e1,
+                        LinkedHashMap::new
+                ));
+    }
+
+    public Map<String, Double> getLabLeaderboard() {
+        List<Team> teams = teamRepository.findAll();
+        Map<String, Double> labDistances = new HashMap<>();
+
+        for (Team team : teams) {
+            double totalDistance = team.getAthletes().stream()
+                    .flatMap(athlete -> athlete.getActivities().stream())
+                    .mapToDouble(Activity::getDistance)
+                    .sum();
+            labDistances.merge(team.getLabName(), totalDistance, Double::sum);
+        }
+
+        return labDistances.entrySet().stream()
+                .sorted(Map.Entry.<String, Double>comparingByValue().reversed())
+                .collect(Collectors.toMap(
+                        Map.Entry::getKey,
+                        Map.Entry::getValue,
+                        (e1, e2) -> e1,
+                        LinkedHashMap::new
+                ));
     }
 }

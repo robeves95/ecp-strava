@@ -37,21 +37,29 @@
 </div>
 
 <div class="container">
-    <ul class="nav nav-tabs" id="dashboardTabs" role="tablist">
-        <li class="nav-item">
-            <a class="nav-link text-dark active" id="athletes-tab" data-bs-toggle="tab" href="#athletes" role="tab" aria-controls="athletes" aria-selected="true">🏃 Athletes</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link text-dark" id="teams-tab" data-bs-toggle="tab" href="#teams" role="tab" aria-controls="teams" aria-selected="false">👥 Teams</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link text-dark" id="leaderboard-tab" data-bs-toggle="tab" href="#leaderboard" role="tab" aria-controls="leaderboard" aria-selected="false">🏆 Leaderboard</a>
-        </li>
-    </ul>
+    <div class="overflow-auto">
+        <ul class="nav nav-tabs nav-justified" id="dashboardTabs" role="tablist">
+            <li class="nav-item">
+                <a class="nav-link text-dark active" id="athletes-tab" data-bs-toggle="tab" href="#athletes" role="tab" aria-controls="athletes" aria-selected="true">🏃 Athletes</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link text-dark" id="teams-tab" data-bs-toggle="tab" href="#teams" role="tab" aria-controls="teams" aria-selected="false">👫 Teams</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link text-dark" id="leaderboard-tab" data-bs-toggle="tab" href="#leaderboard" role="tab" aria-controls="leaderboard" aria-selected="false">🏆 Leaderboard</a>
+            </li>
+            <li class="nav-item" role="presentation">
+                <a class="nav-link text-dark" id="team-leaderboard-tab" data-bs-toggle="tab" href="#team-leaderboard" role="tab" aria-controls="team-leaderboard" aria-selected="false">💪 Team Leaderboard</a>
+            </li>
+            <li class="nav-item" role="presentation">
+                <a class="nav-link text-dark" id="lab-leaderboard-tab" data-bs-toggle="tab" href="#lab-leaderboard" role="tab" aria-controls="lab-leaderboard" aria-selected="false">🧪 Lab Leaderboard</a>
+            </li>
+        </ul>
+    </div>
 
     <div class="tab-content" id="dashboardTabsContent">
         <div class="tab-pane fade show active" id="athletes" role="tabpanel" aria-labelledby="athletes-tab">
-            <table class="table table-striped mt-3">
+            <table class="table table-dark mt-3">
                 <thead>
                 <tr>
                     <th>Name</th>
@@ -67,14 +75,14 @@
                     <td><img th:src="${athlete.profilePhotoUrl}" alt="Profile Photo" class="profile-photo"><a th:text="${athlete.name}"></a></td>
                     <td th:text="${athlete.team != null ? athlete.team.name : 'No Team'}"></td>
                     <td>
-                        <button class="btn btn-primary" data-bs-toggle="modal" th:data-bs-target="'#changeTeamModal' + ${athlete.id}">Change Team</button>
+                        <button class="btn btn-primary" data-bs-toggle="modal" th:data-bs-target="'#changeTeamModal' + ${athlete.id}">✏️</button>
                     </td>
                 </tr>
                 </tbody>
             </table>
         </div>
         <div class="tab-pane fade" id="teams" role="tabpanel" aria-labelledby="teams-tab">
-            <table class="table table-striped mt-3">
+            <table class="table table-responsive table-dark mt-3">
                 <thead>
                 <tr>
                     <th>Team</th>
@@ -91,7 +99,7 @@
             <button class="btn btn-success mt-4" data-bs-toggle="modal" data-bs-target="#newTeamModal">Create New Team</button>
         </div>
         <div class="tab-pane fade" id="leaderboard" role="tabpanel" aria-labelledby="leaderboard-tab">
-            <table class="table table-striped mt-3">
+            <table class="table table-responsive table-dark mt-3">
                 <tr>
                     <th>Rank</th>
                     <th>Athlete</th>
@@ -103,6 +111,48 @@
                     <td colspan="4">No leaderboard data available.</td>
                 </tr>
                 <tr th:each="entry, iterStat : ${leaderboard}">
+                    <td th:text="${iterStat.index + 1}"></td>
+                    <td th:text="${entry.key}"></td>
+                    <td th:text="${#numbers.formatDecimal(entry.value / 1000, 1, 2)}"></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="tab-pane fade" id="team-leaderboard" role="tabpanel" aria-labelledby="team-leaderboard-tab">
+            <table class="table table-responsive table-dark mt-3">
+                <thead>
+                <tr>
+                    <th>Rank</th>
+                    <th>Team</th>
+                    <th>Total Distance (km)</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:if="${teamLeaderboard.isEmpty()}">
+                    <td colspan="3">No team leaderboard data available.</td>
+                </tr>
+                <tr th:each="entry, iterStat : ${teamLeaderboard}">
+                    <td th:text="${iterStat.index + 1}"></td>
+                    <td th:text="${entry.key}"></td>
+                    <td th:text="${#numbers.formatDecimal(entry.value / 1000, 1, 2)}"></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="tab-pane fade" id="lab-leaderboard" role="tabpanel" aria-labelledby="lab-leaderboard-tab">
+            <table class="table table-responsive table-dark mt-3">
+                <thead>
+                <tr>
+                    <th>Rank</th>
+                    <th>Lab</th>
+                    <th>Total Distance (km)</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:if="${labLeaderboard.isEmpty()}">
+                    <td colspan="3">No lab leaderboard data available.</td>
+                </tr>
+                <tr th:each="entry, iterStat : ${labLeaderboard}">
                     <td th:text="${iterStat.index + 1}"></td>
                     <td th:text="${entry.key}"></td>
                     <td th:text="${#numbers.formatDecimal(entry.value / 1000, 1, 2)}"></td>
@@ -181,15 +231,6 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 <script>
     $(document).ready(function () {
-        const urlParams = new URLSearchParams(window.location.search);
-        const showChangeTeamModal = urlParams.get('showChangeTeamModal');
-        const athleteId = urlParams.get('athleteId');
-
-        if (showChangeTeamModal && athleteId) {
-            const modalId = `#changeTeamModal${athleteId}`;
-            $(modalId).modal('show');
-        }
-
         $('#dashboardTabs a').on('click', function (e) {
             e.preventDefault();
             $(this).tab('show');

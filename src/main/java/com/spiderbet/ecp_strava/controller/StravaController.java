@@ -93,6 +93,9 @@ public class StravaController {
         model.addAttribute("athletes", athleteService.getAllAthletes());
         model.addAttribute("teams", teamService.getAllTeams());
         model.addAttribute("leaderboard", athleteService.getLeaderboard());
+        model.addAttribute("teamLeaderboard", teamService.getTeamLeaderboard());
+        model.addAttribute("labLeaderboard", teamService.getLabLeaderboard());
+
         return "dashboard";
     }
 
