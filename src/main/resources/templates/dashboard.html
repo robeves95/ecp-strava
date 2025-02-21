@@ -7,62 +7,13 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="/css/styles.css" rel="stylesheet">
     <link rel="icon" type="image/png" th:href="@{/img/favicon.ico}">
-    <style>
-        body {
-            background-color: #f8f9fa;
-        }
-
-        .profile-photo {
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            object-fit: cover;
-        }
-
-        .navbar {
-            padding: 10px 15px;
-        }
-
-        .nav-tabs {
-            display: flex;
-            flex-wrap: nowrap;
-            overflow-x: auto;
-            white-space: nowrap;
-            -webkit-overflow-scrolling: touch;
-        }
-
-        .nav-tabs .nav-item {
-            flex-shrink: 0;
-        }
-
-        .container {
-            padding-top: 15px;
-        }
-
-        .table {
-            font-size: 14px;
-        }
-
-        .btn {
-            font-size: 14px;
-            padding: 8px 12px;
-        }
-
-        .announcement-banner {
-            background-color: #17a2b8; /* Light Blue */
-            color: white;
-            font-weight: bold;
-            padding: 10px;
-            text-align: center;
-        }
-    </style>
 </head>
 <body>
 
 <!-- Navbar -->
 <nav class="navbar sticky-top navbar-dark bg-dark">
     <div class="container-fluid d-flex justify-content-between align-items-center">
-        <a class="navbar-brand" href="#">ECP Walking Challenge</a>
+        <a class="navbar-brand" href="#">🏃‍♀️ECP Walking Challenge</a>
         <a href="/login">
             <img th:src="@{/img/btn_strava_connectwith_orange@2x.png}" alt="Login to Strava" class="img-fluid" style="max-height: 50px;">
         </a>
@@ -74,6 +25,7 @@
     🚀 To join the challenge, please click the Connect with Strava button above!
 </div>
 
+<div class="content">
 <div class="container">
     <!-- Tabs -->
     <div class="overflow-auto">
@@ -259,7 +211,10 @@
         </div>
     </div>
 </div>
-
+</div>
+<footer class="footer navbar navbar-dark">
+    App created by Rob Eves, message on Teams for any issues.
+</footer>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

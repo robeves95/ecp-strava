@@ -1,8 +1,70 @@
 /* Existing styles */
 body {
     background-color: #f8f9fa;
+    font-family: Poppins, sans-serif;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh; /* Full viewport height */
 }
 
+.profile-photo {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.navbar {
+    padding: 10px 15px;
+}
+
+.nav-tabs {
+    display: flex;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    white-space: nowrap;
+    -webkit-overflow-scrolling: touch;
+}
+
+.nav-tabs .nav-item {
+    flex-shrink: 0;
+}
+
+.container {
+    padding-top: 15px;
+}
+
+.table {
+    font-size: 14px;
+}
+
+.btn {
+    font-size: 14px;
+    padding: 8px 12px;
+}
+
+.announcement-banner {
+    background-color: #17a2b8; /* Light Blue */
+    color: white;
+    font-weight: bold;
+    padding: 10px;
+    text-align: center;
+}
+
+.content {
+    flex: 1; /* Pushes footer to bottom */
+}
+.footer {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background-color: #212529; /* Bootstrap dark navbar color */
+    color: #ffffff; /* White text */
+    text-align: center;
+    padding: 10px;
+    font-size: 14px;
+}
 .navbar-brand {
     font-weight: bold;
     font-size: 1.5rem;
