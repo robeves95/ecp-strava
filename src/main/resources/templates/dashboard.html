@@ -169,7 +169,7 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                 </div>
                 <div class="modal-body">
-                    <form th:action="@{/changeTeam}" method="post">
+                    <form th:action="@{/athletes/changeTeam}" method="post">
                         <input type="hidden" name="athleteId" th:value="${athlete.id}">
                         <select name="teamId" class="form-control">
                             <option th:each="team : ${teams}" th:value="${team.id}" th:text="${team.name}"></option>
