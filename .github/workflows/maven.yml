@@ -23,7 +23,7 @@ jobs:
       - name: Setup Cloud SDK
         uses: google-github-actions/setup-gcloud@v2
         with:
-          project_id: trackdogs
+          project_id: ecp-walking-challenge
           service_account_key: ${{ secrets.GCP_SA_KEY }}
 
       - name: auth
@@ -31,12 +31,9 @@ jobs:
         with:
           credentials_json: ${{ secrets.GCP_SA_KEY }}
 
-      - name: Replace environment variables in app.yaml
-        run: |
-          sed -i 's|${STRAVA_CLIENT_ID}|'"${{ secrets.STRAVA_CLIENT_ID }}"'|g' app.yaml
-          sed -i 's|${STRAVA_CLIENT_SECRET}|'"${{ secrets.STRAVA_CLIENT_SECRET }}"'|g' app.yaml
-          sed -i 's|${DB_PASSWORD}|'"${{ secrets.DB_PASSWORD }}"'|g' app.yaml
-
       - name: Deploy to App Engine
         run: |
-          mvn clean package appengine:deploy
+          mvn clean package appengine:deploy \
+            -DSTRAVA_CLIENT_ID="${{ secrets.STRAVA_CLIENT_ID }}" \
+            -DSTRAVA_CLIENT_SECRET="${{ secrets.STRAVA_CLIENT_SECRET }}" \
+            -DDB_PASSWORD="${{ secrets.DB_PASSWORD }}"
