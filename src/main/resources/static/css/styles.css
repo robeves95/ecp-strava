@@ -55,13 +55,11 @@ body {
     flex: 1; /* Pushes footer to bottom */
 }
 .footer {
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     background-color: #212529; /* Bootstrap dark navbar color */
     color: #ffffff; /* White text */
-    text-align: center;
     padding: 10px;
     font-size: 14px;
 }
