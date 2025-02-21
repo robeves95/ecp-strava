@@ -1,11 +1,6 @@
 entrypoint: java -Xmx2048m -jar ecp-strava.jar
 runtime: java21
 
-env_variables:
-  STRAVA_CLIENT_ID: ${STRAVA_CLIENT_ID}
-  STRAVA_CLIENT_SECRET: ${STRAVA_CLIENT_SECRET}
-  DB_PASSWORD: ${DB_PASSWORD}
-
 instance_class: F1
 
 handlers:
