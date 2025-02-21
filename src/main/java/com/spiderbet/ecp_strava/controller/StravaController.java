@@ -63,7 +63,7 @@ public class StravaController {
             Long expiresAt = ((Number) responseBody.get("expires_at")).longValue();
             Map<String, Object> athleteData = (Map<String, Object>) responseBody.get("athlete");
             Long stravaAthleteId = ((Number) athleteData.get("id")).longValue();
-            String name = (String) athleteData.get("firstname") + " " + (String) athleteData.get("lastname");
+            String name = athleteData.get("firstname") + " " + athleteData.get("lastname");
             String profilePhotoUrl = (String) athleteData.get("profile");
 
             // Save athlete to the database without setting the team
