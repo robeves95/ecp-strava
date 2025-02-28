@@ -1,6 +1,7 @@
 package com.spiderbet.ecp_strava.service;
 
 import com.spiderbet.ecp_strava.model.Athlete;
+import com.spiderbet.ecp_strava.model.LeaderboardEntry;
 import com.spiderbet.ecp_strava.model.Team;
 import com.spiderbet.ecp_strava.repository.AthleteRepository;
 import com.spiderbet.ecp_strava.repository.TeamRepository;
@@ -51,12 +52,8 @@ public class AthleteService {
         athleteRepository.save(athlete);
     }
 
-    public Map<String, Double> getLeaderboard() {
-        List<Object[]> results = athleteRepository.findLeaderboard();
-        Map<String, Double> leaderboard = new LinkedHashMap<>();
-        for (Object[] result : results) {
-            leaderboard.put((String) result[0], (Double) result[1]);
-        }
-        return leaderboard;
+    public List<LeaderboardEntry> getLeaderboard() {
+        List<LeaderboardEntry> results = athleteRepository.findLeaderboard();
+        return results;
     }
 }

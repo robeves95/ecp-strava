@@ -24,6 +24,10 @@
 <div class="announcement-banner">
     🚀 To join the challenge, please click the Connect with Strava button above!
 </div>
+<div class="announcement-banner-2">
+    ⌚️ Challenge starts on 3rd March, when the leaderboards will reset!
+</div>
+
 
 <div class="content">
 <div class="container">
@@ -81,15 +85,16 @@
                 <thead>
                 <tr>
                     <th>Rank</th>
-                    <th>Athlete</th>
+                    <th colspan="2">Athlete</th>
                     <th>Total Distance (km)</th>
                 </tr>
                 </thead>
                 <tbody>
-                <tr th:each="entry, iterStat : ${leaderboard}">
+                <tr th:each="athlete, iterStat : ${leaderboard}">
                     <td th:text="${iterStat.index + 1}"></td>
-                    <td th:text="${entry.key}"></td>
-                    <td th:text="${#numbers.formatDecimal(entry.value / 1000, 1, 2)}"></td>
+                    <td><img th:src="${athlete.profilePhotoUrl}" alt="Profile Photo" class="profile-photo"></td>
+                    <td th:text="${athlete.name}"></td>
+                    <td th:text="${#numbers.formatDecimal(athlete.totalDistance / 1000, 1, 2)}"></td>
                 </tr>
                 </tbody>
             </table>

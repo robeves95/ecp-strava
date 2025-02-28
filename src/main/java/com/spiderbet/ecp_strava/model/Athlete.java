@@ -35,4 +35,17 @@ public class Athlete {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "team_id")
     private Team team;
+
+    @Transient
+    private Double totalDistance;
+
+    // getters and setters for totalDistance
+    public Double getTotalDistance() {
+        return totalDistance;
+    }
+
+    public void setTotalDistance(Double totalDistance) {
+        this.totalDistance = totalDistance;
+    }
+
 }

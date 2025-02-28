@@ -43,8 +43,8 @@ body {
     padding: 8px 12px;
 }
 
-.announcement-banner {
-    background-color: #17a2b8; /* Light Blue */
+.announcement-banner-2 {
+    background-color: #17a2b8 !important; /* Light Blue */
     color: white;
     font-weight: bold;
     padding: 10px;
@@ -53,6 +53,7 @@ body {
 
 .content {
     flex: 1; /* Pushes footer to bottom */
+    margin-top: 1em;
 }
 .footer {
     display: flex;
@@ -92,7 +93,6 @@ footer {
     background-color: #FC4C02; /* Strava orange color */
     color: white;
     text-align: center;
-    margin-bottom: 1em;
     font-weight: bold;
     font-size: 1rem;
 }
