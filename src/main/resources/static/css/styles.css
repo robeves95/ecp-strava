@@ -7,6 +7,72 @@ body {
     min-height: 100vh; /* Full viewport height */
 }
 
+.countdown {
+    display: flex;
+    justify-content: center;
+    margin-top: 10px;
+}
+
+.flap {
+    background: #222;
+    color: #fff;
+    font-size: 24px;
+    font-weight: bold;
+    padding: 10px 15px;
+    border-radius: 5px;
+    margin: 0 5px;
+    min-width: 50px;
+    text-align: center;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+}
+
+.flap-2 {
+    background: #ff5722;
+    color: #fff;
+    font-size: 28px;
+    font-weight: bold;
+    padding: 10px 15px;
+    border-radius: 5px;
+    min-width: 80px;
+    text-align: center;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+    font-family: 'Courier New', monospace;
+}
+
+/* Flap display style */
+.flap-display {
+    display: flex;
+    align-items: center;
+    margin-left: 1em;
+}
+
+.unit {
+    font-size: 20px;
+    color: #eee;
+    margin-left: 5px;
+}
+
+
+.label {
+    font-size: 12px;
+    color: #eee;
+    margin-top: 5px;
+}
+
+.total-distance-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #222;
+    color: white;
+    padding: 15px;
+    font-size: 20px;
+    font-weight: bold;
+    margin-bottom: 15px;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+}
+
 .profile-photo {
     width: 40px;
     height: 40px;

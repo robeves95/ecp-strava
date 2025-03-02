@@ -1,5 +1,7 @@
 package com.spiderbet.ecp_strava.controller;
 
+import com.spiderbet.ecp_strava.model.Activity;
+import com.spiderbet.ecp_strava.model.LeaderboardEntry;
 import com.spiderbet.ecp_strava.service.AthleteService;
 import com.spiderbet.ecp_strava.service.TeamService;
 import org.springframework.beans.factory.annotation.Value;
@@ -10,6 +12,9 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.view.RedirectView;
 import org.springframework.web.client.RestTemplate;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Map;
 
@@ -24,6 +29,12 @@ public class StravaController {
 
     @Value("${strava.redirect.uri}")
     private String redirectUri;
+
+    @Value("${leaderboard.start.date}")
+    private String leaderboardStartDate;
+
+    @Value("${leaderboard.duration.days}")
+    private int leaderboardDurationDays;
 
     private final AthleteService athleteService;
     private final TeamService teamService;
@@ -90,11 +101,22 @@ public class StravaController {
 
     @GetMapping("/")
     public String dashboard(Model model) {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        LocalDateTime startDate = LocalDate.parse(leaderboardStartDate, formatter).atStartOfDay();
+        LocalDateTime endDate = startDate.plusDays(leaderboardDurationDays);
+
         model.addAttribute("athletes", athleteService.getAllAthletes());
         model.addAttribute("teams", teamService.getAllTeams());
-        model.addAttribute("leaderboard", athleteService.getLeaderboard());
-        model.addAttribute("teamLeaderboard", teamService.getTeamLeaderboard());
-        model.addAttribute("labLeaderboard", teamService.getLabLeaderboard());
+        model.addAttribute("leaderboard", athleteService.getLeaderboard(startDate, endDate));
+        model.addAttribute("teamLeaderboard", teamService.getTeamLeaderboard(startDate, endDate));
+        model.addAttribute("labLeaderboard", teamService.getLabLeaderboard(startDate, endDate));
+
+        Double totalDistance = 0.0;
+        for(LeaderboardEntry leaderboardEntry : athleteService.getLeaderboard(startDate, endDate)){
+            totalDistance += leaderboardEntry.getTotalDistance();
+        }
+
+        model.addAttribute("totalDistance", totalDistance);
 
         return "dashboard";
     }

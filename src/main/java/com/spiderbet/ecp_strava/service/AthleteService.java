@@ -5,8 +5,12 @@ import com.spiderbet.ecp_strava.model.LeaderboardEntry;
 import com.spiderbet.ecp_strava.model.Team;
 import com.spiderbet.ecp_strava.repository.AthleteRepository;
 import com.spiderbet.ecp_strava.repository.TeamRepository;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -17,6 +21,12 @@ public class AthleteService {
 
     private final AthleteRepository athleteRepository;
     private final TeamRepository teamRepository;
+
+    @Value("${leaderboard.start.date}")
+    private String leaderboardStartDate;
+
+    @Value("${leaderboard.duration.days}")
+    private int leaderboardDurationDays;
 
     public AthleteService(AthleteRepository athleteRepository, TeamRepository teamRepository) {
         this.athleteRepository = athleteRepository;
@@ -52,8 +62,8 @@ public class AthleteService {
         athleteRepository.save(athlete);
     }
 
-    public List<LeaderboardEntry> getLeaderboard() {
-        List<LeaderboardEntry> results = athleteRepository.findLeaderboard();
-        return results;
+    public List<LeaderboardEntry> getLeaderboard(LocalDateTime startDate, LocalDateTime endDate) {
+
+        return athleteRepository.findLeaderboard(startDate, endDate);
     }
 }

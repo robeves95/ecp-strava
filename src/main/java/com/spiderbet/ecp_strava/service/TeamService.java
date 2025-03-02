@@ -5,6 +5,7 @@ import com.spiderbet.ecp_strava.model.Team;
 import com.spiderbet.ecp_strava.repository.TeamRepository;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -31,14 +32,15 @@ public class TeamService {
         teamRepository.save(team);
     }
 
-    public Map<String, Double> getTeamLeaderboard() {
+    public Map<String, Double> getTeamLeaderboard(LocalDateTime startDate, LocalDateTime endDate) {
         List<Team> teams = teamRepository.findAll();
         Map<String, Double> teamDistances = new HashMap<>();
 
         for (Team team : teams) {
             double totalDistance = team.getAthletes().stream()
                     .flatMap(athlete -> athlete.getActivities().stream())
-                    .mapToDouble(Activity::getDistance)
+                    .filter(activity -> !activity.getStartDate().isBefore(startDate) && !activity.getStartDate().isAfter(endDate))
+                    .mapToDouble(activity -> activity.getSportType().contains("Ride") ? activity.getDistance() * 0.25 : activity.getDistance())
                     .sum();
             teamDistances.put(team.getName(), totalDistance);
         }
@@ -53,14 +55,15 @@ public class TeamService {
                 ));
     }
 
-    public Map<String, Double> getLabLeaderboard() {
+    public Map<String, Double> getLabLeaderboard(LocalDateTime startDate, LocalDateTime endDate) {
         List<Team> teams = teamRepository.findAll();
         Map<String, Double> labDistances = new HashMap<>();
 
         for (Team team : teams) {
             double totalDistance = team.getAthletes().stream()
                     .flatMap(athlete -> athlete.getActivities().stream())
-                    .mapToDouble(Activity::getDistance)
+                    .filter(activity -> !activity.getStartDate().isBefore(startDate) && !activity.getStartDate().isAfter(endDate))
+                    .mapToDouble(activity -> activity.getSportType().contains("Ride") ? activity.getDistance() * 0.25 : activity.getDistance())
                     .sum();
             labDistances.merge(team.getLabName(), totalDistance, Double::sum);
         }
@@ -74,4 +77,5 @@ public class TeamService {
                         LinkedHashMap::new
                 ));
     }
+
 }
