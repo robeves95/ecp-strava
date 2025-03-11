@@ -15,11 +15,13 @@ public interface AthleteRepository extends JpaRepository<Athlete, Long> {
 
     List<Athlete> findAllByOrderByNameAsc();
 
-    @Query("SELECT new com.spiderbet.ecp_strava.model.LeaderboardEntry(a.name, " +
-            "CAST(SUM(CASE WHEN act.sportType LIKE '%Ride%' THEN act.distance * 0.25 ELSE act.distance END) AS double), " +
-            "a.profilePhotoUrl) " +
-            "FROM Athlete a JOIN a.activities act " +
-            "WHERE act.startDate BETWEEN :startDate AND :endDate " +
-            "GROUP BY a.id ORDER BY SUM(CASE WHEN act.sportType LIKE '%Ride%' THEN act.distance * 0.25 ELSE act.distance END) DESC")
-    List<LeaderboardEntry> findLeaderboard(LocalDateTime startDate, LocalDateTime endDate);
+@Query("SELECT new com.spiderbet.ecp_strava.model.LeaderboardEntry(a.name, " +
+        "CAST(SUM(CASE WHEN act.sportType LIKE '%Ride%' THEN act.distance * 0.25 " +
+        "WHEN act.sportType LIKE '%Ski%' THEN act.distance * 0.125 ELSE act.distance END) AS double), " +
+        "a.profilePhotoUrl) " +
+        "FROM Athlete a JOIN a.activities act " +
+        "WHERE act.startDate BETWEEN :startDate AND :endDate " +
+        "GROUP BY a.id ORDER BY SUM(CASE WHEN act.sportType LIKE '%Ride%' THEN act.distance * 0.25 " +
+        "WHEN act.sportType LIKE '%Ski%' THEN act.distance * 0.125 ELSE act.distance END) DESC")
+List<LeaderboardEntry> findLeaderboard(LocalDateTime startDate, LocalDateTime endDate);
 }

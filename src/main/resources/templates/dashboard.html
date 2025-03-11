@@ -238,7 +238,7 @@
     function updateCountdown() {
         const now = new Date();
         const startDate = new Date("2025-03-03T00:00:00Z");
-        const endDate = new Date("2025-03-10T00:00:00Z");
+        const endDate = new Date("2025-03-14T23:59:59Z");
         const countdownContainer = document.getElementById("countdown-container");
 
         let targetDate, message;
@@ -250,7 +250,7 @@
         } else if (now >= startDate && now < endDate) {
             // From March 3rd to March 10th → Countdown to Challenge End
             targetDate = endDate;
-            message = "Time left in challenge:";
+            message = "Time left in challenge (now extended until midnight Friday! 😮):";
         } else {
             // After March 10th → Challenge Ended
             countdownContainer.innerHTML = "<strong>🏁 Challenge Ended</strong>";
